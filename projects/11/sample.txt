@@ -1,0 +1,12 @@
+class daniel{
+    field int x, daniel;
+    static char yali;
+
+    method void StaticVBenl(int x, int y) {
+        var int hello, world;
+    }
+
+        method void benEL(int x, int y) {
+        var int hello, world;
+    }
+}

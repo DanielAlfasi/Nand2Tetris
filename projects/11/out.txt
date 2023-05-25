@@ -1,0 +1,6 @@
+Function StaticVBenl 2
+push argument 0
+pop pointer 0
+Function benEL 2
+push argument 0
+pop pointer 0

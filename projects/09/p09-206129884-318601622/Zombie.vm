@@ -1,0 +1,187 @@
+function Zombie.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 1
+push constant 0
+pop this 0
+push pointer 0
+call Zombie.drawZombie 1
+pop temp 0
+push pointer 0
+return
+function Zombie.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Zombie.drawZombie 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push constant 1
+add
+pop this 0
+push this 0
+push this 1
+push this 0
+push constant 20
+add
+push this 1
+push constant 10
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 10
+add
+push this 0
+push constant 5
+add
+push this 1
+push constant 35
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 30
+add
+push this 0
+push constant 10
+add
+push this 1
+push constant 35
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 15
+add
+push this 0
+push constant 15
+add
+push this 1
+push constant 20
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Zombie.removeZombie 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push constant 20
+add
+push this 1
+push constant 10
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 10
+add
+push this 0
+push constant 5
+add
+push this 1
+push constant 35
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 30
+add
+push this 0
+push constant 10
+add
+push this 1
+push constant 35
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push this 1
+push constant 15
+add
+push this 0
+push constant 15
+add
+push this 1
+push constant 20
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Zombie.moveRight 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 21
+add
+push constant 500
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Zombie.removeZombie 1
+pop temp 0
+push pointer 0
+call Zombie.drawZombie 1
+pop temp 0
+push constant 0
+return
+label IF_FALSE0
+push pointer 0
+call Zombie.removeZombie 1
+pop temp 0
+push pointer 0
+call Zombie.dispose 1
+pop temp 0
+push constant 0
+return
+function Zombie.zombieHeight 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Zombie.ate 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 26
+add
+push constant 499
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Zombie.dispose 1
+pop temp 0
+push constant 0
+not
+return
+label IF_FALSE0
+push constant 0
+return

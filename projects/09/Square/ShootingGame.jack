@@ -1,0 +1,55 @@
+class ShootingGame {
+   field Player player; // the square of this game
+   field int direction; // the square's current direction: 
+                        // 0=none, 1=up, 2=down, 3=left, 4=right
+
+   /** Constructs a new Square Game. */
+   constructor ShootingGame new() {
+      // Creates a 30 by 30 pixels square and positions it at the top-left
+      // of the screen.
+      let player = Player.new();
+      let direction = 0;  // initial state is no movement
+      return this;
+   }
+
+   /** Disposes this game. */
+   method void dispose() {
+      do player.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Moves the square in the current direction. */
+   method void movePlayer() {
+      if (direction = 1) { do player.moveUp(); }
+      if (direction = 2) { do player.moveDown(); }
+      do Sys.wait(5);  // delays the next movement
+      return;
+   }
+
+   /** Runs the game: handles the user's inputs and moves the square accordingly */
+   method void run() {
+      var char key;  // the key currently pressed by the user
+      var boolean exit;
+      let exit = false;
+      
+      while (~exit) {
+         // waits for a key to be pressed
+         while (key = 0) {
+            let key = Keyboard.keyPressed();
+            do movePlayer();
+         }
+         if (key = 81)  { let exit = true; }     // q key
+         if (key = 131) { let direction = 1; }   // up arrow
+         if (key = 133) { let direction = 2; }   // down arrow
+
+
+         // waits for the key to be released
+         while (~(key = 0)) {
+            let key = Keyboard.keyPressed();
+            do movePlayer();
+         }
+     } // while
+     return;
+   }
+}

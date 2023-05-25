@@ -1,0 +1,45 @@
+class Player {
+
+   field int x, y;
+   constructor Player new() {
+      let x = 5;
+      let y = 5;
+      do draw();
+      return this;
+   }
+
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+    method void draw() {
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x, y, x , y);
+      do Screen.drawRectangle(x + 5, y+ 5, x , y);
+      return;
+   }
+
+    method void moveUp() {
+      if (y > 1) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y - 1, x, y);
+         let y = y - 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, y, x , y + 1);
+      }
+      return;
+   }
+
+   /** Moves the square down by 2 pixels. */
+   method void moveDown() {
+      if ((y) < 254) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x , y + 1);
+         let y = y + 2;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, y  - 1, x , y );
+      }
+      return;
+   }
+}

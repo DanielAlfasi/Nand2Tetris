@@ -1,0 +1,194 @@
+class ShootingGame {
+
+   field Zombie zombie1, zombie2, zombie3, zombie4; // Initlize's the zombie's fields.
+   field Shoot shoot; // the shoot field.
+   field Player player; // the player field.
+   field int direction, score; // the direction and score fields.
+   field char key; // the keyboard field
+
+   /** Constructs a new Shooting Game. */
+   constructor ShootingGame new() {
+      let shoot = null;
+      let score = 0; // set's the score to 0.
+      let zombie1 = null; 
+      let zombie2 = null;
+      let zombie3 = null;
+      let player = Player.new(); // construct's a new player
+      let key = 0; // initial key is no press.
+      let direction = 0;  // initial state is no movement.
+      return this;
+   }
+
+
+
+   /** Disposes this game. */
+   method void dispose() {
+      do player.dispose();
+      do zombie.dispose();
+      do shoot.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Moves the Player in the current direction. */
+   method void movePlayer() {
+      if (direction = 1) { do player.moveUp(); } 
+      if (direction = 2) { do player.moveDown(); }
+      if (direction = 3) { let shoot = Shoot.new(player.getY());}
+  // delays the next movement
+           do Sys.wait(8);
+      return;
+   }
+   /* Increment the score by 1 point */
+   method void updateScore() {
+         do Output.moveCursor(22,7);
+         do Output.printInt(score);
+         let score = score + 1;
+         return;
+   }
+
+   /* Start screen of the game display */
+   method void showStart() {
+      do Screen.clearScreen();
+      do Screen.setColor(true);
+
+      do Screen.drawRectangle(300, 25, 325 , 25 + 10); // Head
+      do Screen.drawRectangle(310 , 25 + 11, 315 , 25 + 60); // Body
+      do Screen.drawRectangle(296 , 25 + 55, 315 , 25 + 60); // Legs
+      do Screen.drawRectangle(285 , 25 + 30, 315 , 25 + 35); // Weapon
+      do Screen.drawRectangle(288 , 25 + 28, 291 , 25 + 30); // Weapon sight
+      
+      do Screen.drawCircle(250, 25 + 28 , 3);
+
+      do Screen.drawRectangle(125, 25, 125 + 20 , 25 + 10); // Head
+      do Screen.drawRectangle(125 , 25 + 11, 125 + 5 , 25 + 60); // Body
+      do Screen.drawRectangle(125 ,  25 + 55, 125 + 10 , 25 + 60); // Legs
+      do Screen.drawRectangle(125 , 25 + 30, 125 + 15 , 25 + 35); // Hands
+
+
+      do Output.moveCursor(11,10);
+	   do Output.printString("Welcome to Golbarizombie'z, Click to play!");
+      do Output.moveCursor(14,4);
+      do Output.printString("Use the UP/DOWN ARROW keys to navigate and SPACE to shoot");
+      let key = 0;
+      while (key = 0) {
+         let key = Keyboard.keyPressed();  
+      }
+      return;
+   }
+
+   /* Between game screen display */
+   method void showBetweenGames() {
+      do Screen.clearScreen();
+      do Output.moveCursor(10,15);
+	   do Output.printString("Game Over, your SCORE :");
+      do Output.moveCursor(10,41);
+      do Output.printInt(score - 1);
+      do Output.moveCursor(12,20);
+      do Output.printString("Click to start over!");
+      do Sys.wait(1500);
+      let key = 0;
+      while (key = 0) {
+         let key = Keyboard.keyPressed();  
+      }
+      return;
+   }
+   
+
+
+   /* Runs the game: handles the user's inputs and moves the Player accordingly */
+   method void run() {
+      var boolean exit;
+      var boolean keeprunning;
+      var int x;
+      let exit = false;
+      let keeprunning = true;
+
+      /* Show the start display */
+      do showStart();
+      while (~exit) {
+         // Initilize a new game
+         do Screen.clearScreen();
+         let score = 0; // sets the score to 0.
+
+         /* Initlize the first four zombies */
+         let zombie1 = Zombie.new(10);
+         let zombie2 = Zombie.new(65);
+         let zombie3 = Zombie.new(125);
+         let zombie4 = Zombie.new(200);
+         do updateScore();
+         do Output.moveCursor(22,0);
+         do Output.printString("Score: ");
+         do player.drawPlayer();
+
+         while (keeprunning) {
+         let key = Keyboard.keyPressed();  
+         if (key = 81)  { let exit = true; } // q key
+         if (key = 131) { let direction = 1; } // up arrow
+         if (key = 133) { let direction = 2; } // down arrow
+         if (key = 32) { let direction = 3; } // space
+         if (key = 0) { let direction = 0; } // does nothing
+         
+         /* moves the zombies and the player */
+         do zombie1.moveRight();
+         do zombie2.moveRight();
+         do zombie3.moveRight();
+         do zombie4.moveRight();
+         do movePlayer();
+
+         /* Handles the shoot */
+         if (~(shoot = null)) {
+               do shoot.moveLeft(); // draws the shoot
+               do Sys.wait(15);
+               // Checks if the shoot was in one of the zombies hitbox, if so eliminates the zombie and create a new one in a random position
+               if (shoot.shootHeight() < (zombie1.zombieHeight() + 35) & shoot.shootHeight() > (zombie1.zombieHeight())) {
+                  do zombie1.removeZombie();
+                  do zombie1.dispose();
+                  let zombie1 = null;
+                  let x = Random.randRange(200);
+                  let zombie1 = Zombie.new(x + 10);
+                  do updateScore();
+               }
+               if (shoot.shootHeight() < (zombie2.zombieHeight() + 35) & shoot.shootHeight() > (zombie2.zombieHeight())) {
+                  do zombie2.removeZombie();
+                  do zombie2.dispose();
+                  let zombie2 = null;
+                  let x = Random.randRange(200);
+                  let zombie2 = Zombie.new(x + 10);
+                  do updateScore();
+               }
+               if (shoot.shootHeight() < (zombie3.zombieHeight() + 35) & shoot.shootHeight() > (zombie3.zombieHeight())) {
+                  do zombie3.removeZombie();
+                  do zombie3.dispose();
+                  let zombie3 = null;
+                  let x = Random.randRange(200);
+                  let zombie3 = Zombie.new(x + 10);
+                  do updateScore();
+               }
+               if (shoot.shootHeight() < (zombie4.zombieHeight() + 35) & shoot.shootHeight() > (zombie4.zombieHeight())) {
+                  do zombie4.removeZombie();
+                  do zombie4.dispose();
+                  let zombie4 = null;
+                  let x = Random.randRange(200);
+                  let zombie4 = Zombie.new(x + 10);
+                  do updateScore();
+               }
+               do shoot.dispose();
+               let shoot = null; 
+            }
+            // Checks whether one of the zombies crossed the player line and if true ends the game
+            if (zombie1.ate() | zombie2.ate() | zombie3.ate() | zombie4.ate()) {
+               let keeprunning = false;
+             }
+
+         }
+         // Between games display.
+         do showBetweenGames();
+         // Allows to run the game again.
+         let keeprunning = true;
+      }
+
+return;
+     } 
+     
+   }

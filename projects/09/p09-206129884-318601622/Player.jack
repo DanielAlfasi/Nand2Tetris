@@ -1,0 +1,67 @@
+class Player {
+   field int x, y, i;
+
+   /* Constructs a new player in the default position. */
+   constructor Player new() {
+      let y = 75;
+      let i = 0;
+      do drawPlayer();
+      return this;
+   }
+
+   /* disposes the Player from the memory */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /* Draws the player according to the value of y */
+   method void drawPlayer() {
+      do Screen.setColor(true);
+      let y = y + i;
+      do Screen.drawRectangle(450, y, 475 , y + 10); // Head
+      do Screen.drawRectangle(460 , y + 11, 465 , y + 60); // Body
+      do Screen.drawRectangle(445 , y + 55, 465 , y + 60); // Legs
+      do Screen.drawRectangle(435 , y + 30, 465 , y + 35); // Weapon
+      do Screen.drawRectangle(438 , y + 28, 441 , y + 30); // Weapon sight
+      
+      return;
+   }
+
+   /* Removes the last position that the Player was drew */
+   method void removePlayer() {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(450, y, 475 , y + 10); // Head
+      do Screen.drawRectangle(460 , y + 11, 465 , y + 60); // Body
+      do Screen.drawRectangle(445 , y + 55, 465 , y + 60); // Legs
+      do Screen.drawRectangle(435 , y + 30, 465 , y + 35); // Weapon
+      do Screen.drawRectangle(438 , y + 28, 441 , y + 30); // Weapon sight
+      return;
+   }
+
+   /* Moves up the player on the y axis (only if possible) */
+   method void moveUp() {
+      if (y - 1 > 1) {
+         do removePlayer();
+         let i = -1;
+         do drawPlayer();
+      }
+      return;
+   }
+
+   /* Moves down the player on the y axis (only if possible) */
+   method void moveDown() {
+      if (y + 61 < 254) {
+         do removePlayer();
+         let i = 1;
+         do drawPlayer();
+      }
+      return;
+   }
+
+   /* Returns the Y position of the weapon sight */
+   method int getY() {
+      return y + 28;
+   }
+
+}

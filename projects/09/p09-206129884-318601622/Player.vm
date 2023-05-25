@@ -1,0 +1,190 @@
+function Player.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push constant 75
+pop this 1
+push constant 0
+pop this 2
+push pointer 0
+call Player.drawPlayer 1
+pop temp 0
+push pointer 0
+return
+function Player.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Player.drawPlayer 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 1
+push this 2
+add
+pop this 1
+push constant 450
+push this 1
+push constant 475
+push this 1
+push constant 10
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 460
+push this 1
+push constant 11
+add
+push constant 465
+push this 1
+push constant 60
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 445
+push this 1
+push constant 55
+add
+push constant 465
+push this 1
+push constant 60
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 435
+push this 1
+push constant 30
+add
+push constant 465
+push this 1
+push constant 35
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 438
+push this 1
+push constant 28
+add
+push constant 441
+push this 1
+push constant 30
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Player.removePlayer 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push constant 450
+push this 1
+push constant 475
+push this 1
+push constant 10
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 460
+push this 1
+push constant 11
+add
+push constant 465
+push this 1
+push constant 60
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 445
+push this 1
+push constant 55
+add
+push constant 465
+push this 1
+push constant 60
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 435
+push this 1
+push constant 30
+add
+push constant 465
+push this 1
+push constant 35
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 438
+push this 1
+push constant 28
+add
+push constant 441
+push this 1
+push constant 30
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Player.moveUp 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 1
+sub
+push constant 1
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Player.removePlayer 1
+pop temp 0
+push constant 1
+neg
+pop this 2
+push pointer 0
+call Player.drawPlayer 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Player.moveDown 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 61
+add
+push constant 254
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Player.removePlayer 1
+pop temp 0
+push constant 1
+pop this 2
+push pointer 0
+call Player.drawPlayer 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Player.getY 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 28
+add
+return

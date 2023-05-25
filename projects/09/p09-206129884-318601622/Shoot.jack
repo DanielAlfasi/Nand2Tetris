@@ -1,0 +1,47 @@
+class Shoot {   
+   field int x,y;
+
+   /* Construct a new shoot at the given Ay */
+   constructor Shoot new(int Ay) {
+      let x = 435;
+      let y = Ay;
+      do drawShoot();
+      return this;
+   }
+
+   /* Disposes the shoot from the memory */ 
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /* Draws the shoot */ 
+   method void drawShoot() {
+      let x = x - 1;  
+      do Screen.setColor(true);
+      do Screen.drawCircle(x, y, 3);
+      return;
+   }
+
+   /* Removes the shoot from the last place it was drawed */ 
+   method void removeShoot() {
+    do Screen.setColor(false);
+    do Screen.drawCircle(x, y, 3);
+      return;
+   }
+
+   /* Moves the shoot a pixel to the left if possible */ 
+   method void moveLeft() {
+      while (x - 1 > 3) {
+         do removeShoot();
+         do drawShoot();
+      }
+      do removeShoot();
+      return;
+   }
+
+   /* returns the shoot height according to the y axis */ 
+   method int shootHeight() {
+    return y;
+   }
+}

@@ -1,0 +1,65 @@
+class Zombie {
+
+   field int x, zombiey;
+   /* Construct a new zombie */ 
+   constructor Zombie new(int height) {
+      let zombiey = height;
+      let x = 0;
+      do drawZombie();
+      return this;
+   }
+
+   /* Disposes the zombie from the memory */ 
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /* Draws the zombie */ 
+   method void drawZombie() {
+      do Screen.setColor(true);
+      let x = x + 1;  
+      do Screen.drawRectangle(x, zombiey, x + 20 , zombiey + 10); // Head
+      do Screen.drawRectangle(x , zombiey + 10, x + 5 , zombiey + 35); // Body
+      do Screen.drawRectangle(x , zombiey + 30, x + 10 , zombiey + 35); // Legs
+      do Screen.drawRectangle(x , zombiey + 15, x + 15 , zombiey + 20); // Hands
+      return;
+   }
+
+   /* Removes the zombie from the last position it was drawed */ 
+   method void removeZombie() {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, zombiey, x + 20 , zombiey + 10); // Head
+      do Screen.drawRectangle(x , zombiey + 10, x + 5 , zombiey + 35); // Body
+      do Screen.drawRectangle(x , zombiey + 30, x + 10 , zombiey + 35); // Legs
+      do Screen.drawRectangle(x , zombiey + 15, x + 15 , zombiey + 20); // Hands
+      return;
+   }
+
+   /* Moves the zombie right by 1 pixel if it possible */ 
+   method void moveRight() {
+      if (x + 21 < 500) {
+         do removeZombie();
+         do drawZombie();
+         return;
+      }
+      do removeZombie();
+      do dispose();
+      return;
+   }
+
+   /* Returns the zombie height according to the y axis */ 
+   method int zombieHeight() {
+    return zombiey;
+   }
+
+   /* Returns true if the zombie passed the player line and false otherwise */  
+   method boolean ate() {
+      if ((x + 26) > 499) {
+        do dispose();
+        return true;
+      }
+    return false;
+   }
+
+}
