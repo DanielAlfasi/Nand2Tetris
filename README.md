@@ -27,7 +27,7 @@ Here are the projects completed:
 6. **Project 6:** Assembler
 7. **Project 7:** VM I: Stack Arithmetic
 8. **Project 8:** VM II: Program Control
-9. **Project 9:** High-Level Language
+9. **Project 9:** High-Level Language - Zombie shooting game
 10. **Project 10:** Compiler I: Syntax Analysis
 11. **Project 11:** Compiler II: Code Generation
 
